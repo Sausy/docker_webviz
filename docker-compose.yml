@@ -1,0 +1,18 @@
+version: '3'
+services:
+  webviz_build:
+    image: "${DOCKHUB_USER}/webviz:${ARCHITECTUR}"
+    build:
+      context: .
+      args:
+        ROS_DIST: ${ROSVERSION}
+        PLATFORM: ${ARCHITECTUR}
+      dockerfile: Dockerfile
+  webviz:
+    image: "${DOCKHUB_USER}/webviz:${ARCHITECTUR}"
+    container_name: webviz
+    hostname: webviz
+    network_mode: "host"
+    environment:
+      - ROS_MASTER_URI=http://localhost:11311
+      - ROSVERSION=${ROSVERSION}
